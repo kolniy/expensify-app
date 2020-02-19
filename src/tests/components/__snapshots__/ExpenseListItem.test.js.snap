@@ -10,10 +10,10 @@ exports[`Render expense list with fixtures data 1`] = `
     </h3>
   </Link>
   <p>
-    109500
+    $1,095.00
   </p>
   <p>
-    -345600000
+    December 28th, 1969
   </p>
 </div>
 `;

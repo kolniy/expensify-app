@@ -19,12 +19,12 @@
     "react-test-renderer": "16.12.0"
   },
   "dependencies": {
-    "babel-loader": "8.0.6",
     "@babel/cli": "7.2.3",
     "@babel/core": "7.3.3",
     "@babel/plugin-proposal-object-rest-spread": "7.7.4",
     "@babel/preset-env": "7.3.1",
     "@babel/preset-react": "7.0.0",
+    "babel-loader": "8.0.6",
     "babel-plugin-transform-class-properties": "6.24.1",
     "css-loader": "3.2.0",
     "express": "4.17.1",
@@ -33,6 +33,7 @@
     "moment": "2.24.0",
     "node-sass": "4.12.0",
     "normalize.css": "8.0.1",
+    "numeral": "2.0.6",
     "raf": "3.4.1",
     "react": "16.10.2",
     "react-addons-shallow-compare": "15.6.2",
