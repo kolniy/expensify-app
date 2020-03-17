@@ -5,14 +5,10 @@ import expenseSelector from '../selectors/expenses'
 import expenseTotal from '../selectors/expense-total'
 
 export const ExpenseSummary = (prop) => {
+    const expenseWord = prop.expenseCount === 1 ? 'expense' : 'expenses'
     return (
         <div>
-            {
-            prop.expenseCount === 1 ? (
-            <p>Viewing {prop.expenseCount} expense totalling {numeral(prop.expenseTotal / 100).format('$0,0.00')}</p>) :
-             (<p>Viewing {prop.expenseCount} expenses totalling {numeral(prop.expenseTotal / 100).format('$0,0.00')}
-             </p>)
-             }
+        <h1>Viewing {prop.expenseCount} {expenseWord} totalling {numeral(prop.expenseTotal / 100).format('$0,0.00')}</h1>
         </div>
     )
 }
