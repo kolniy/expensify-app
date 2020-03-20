@@ -31,12 +31,30 @@ export const removeExpense = ({ id } = {}) => ({
     id
 })
 
+// START REMOVE EXPENSE
+export const startRemoveExpense = ({ id } = {}) => {
+    return (dispatch) => {
+        return database.ref(`expenses/${id}`).remove().then(() => {  // returns a promise. makes it possible to attach a .then() fuction when the start remove expense is dispatched
+            dispatch(removeExpense({ id }))
+        })
+    }
+}
+
 // EDIT EXPENSE
 export const editExpense = (id, updates) => ({
     type: 'EDIT_EXPENSE',
     id,
     updates
 })
+
+//START EDIT EXPENSE
+export const startEditExpense = (id, updates) => {
+    return (dispatch) => {
+       return database.ref(`expenses/${id}`).update(updates).then(() => {
+            dispatch(editExpense(id, updates))
+        })
+    }
+}
 
 // SET EXPENSES
 export const setExpenses = (expenses) => ({
@@ -57,14 +75,6 @@ export const startSetExpenses = () => {
                 })
             })
             dispatch(setExpenses(expenseData))
-        })
-    }
-}
-
-export const startRemoveExpense = ({ id } = {}) => {
-    return (dispatch) => {
-        return database.ref(`expenses/${id}`).remove().then(() => {  // returns a promise. makes it possible to attach a .then() fuction when the start remove expense is dispatched
-            dispatch(removeExpense({ id }))
         })
     }
 }
