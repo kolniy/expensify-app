@@ -10,7 +10,7 @@ export default () => {
         expenses: expensesReducer, 
         filters: filterReducer
     }), 
-    composeEnhancers(applyMiddleware(thunk))
+    composeEnhancers(applyMiddleware(thunk)) // the thunk middleware from the redux-thunk module allows us to dispatch a function insead of as usual object
    )
      return store
 }

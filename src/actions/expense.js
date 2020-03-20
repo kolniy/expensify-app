@@ -61,7 +61,7 @@ export const startSetExpenses = () => {
     }
 }
 
-export const startRemoveExpense = ({ id }) => {
+export const startRemoveExpense = ({ id } = {}) => {
     return (dispatch) => {
         return database.ref(`expenses/${id}`).remove().then(() => {  // returns a promise. makes it possible to attach a .then() fuction when the start remove expense is dispatched
             dispatch(removeExpense({ id }))

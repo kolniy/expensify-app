@@ -8,8 +8,8 @@ export class EditExpensePage extends React.Component {
         this.props.editExpense(this.props.expense.id, expense)
         this.props.history.push('/')
     }
-    removeExpense = () => {
-        this.props.removeExpense({ id: this.props.expense.id })
+    startRemoveExpense = () => {
+        this.props.startRemoveExpense({ id: this.props.expense.id })
         this.props.history.push('/')
     }
     render(){
@@ -24,7 +24,7 @@ export class EditExpensePage extends React.Component {
               this.editExpense(expense)
             }}
             />
-            <button onClick={this.removeExpense}>Remove</button>
+            <button onClick={this.startRemoveExpense}>Remove</button>
         </div>
         )
     }
@@ -38,7 +38,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     editExpense: (id, expense) => dispatch(editExpense(id, expense)),
-    removeExpense: ({ id }) => dispatch(startRemoveExpense({ id }))
+    startRemoveExpense: ({ id }) => dispatch(startRemoveExpense({ id }))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditExpensePage)

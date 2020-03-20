@@ -1,10 +1,18 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import { startAddExpense, addExpense, editExpense, removeExpense, setExpenses, startSetExpenses, startRemoveExpense } from '../../actions/expense'
+import { 
+    startAddExpense, 
+    addExpense,
+    editExpense, 
+    startRemoveExpense,
+    removeExpense, 
+    setExpenses,
+    startSetExpenses
+ } from '../../actions/expense'
 import expenses from '../fixtures/expenses'
 import database from '../../firebase/firebase'
 
-const createMockStore = configureMockStore([thunk])
+const createMockStore = configureMockStore([thunk]) // the thunk middleware from the redux-thunk module allows us to dispatch a function insead of as usual object
 
 beforeEach((done) => {
     const expenseData = {}
@@ -120,9 +128,8 @@ test('should remove the expenses from firebase', (done) => {
             type: 'REMOVE_EXPENSE',
             id: expenses[1].id
         })
-        done()
-    })
-    database.ref(`expenses/${expenses[1].id}`).once('value').then((snapshot) => {
+        return database.ref(`expenses/${expenses[1].id}`).once('value')
+    }).then((snapshot) => {
         expect(snapshot.val()).toBeNull()
         done()
     })
