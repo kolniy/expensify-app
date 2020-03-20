@@ -16,7 +16,7 @@ export const startAddExpense = (expenseData = {}) => {
             createdAt=0
         } = expenseData
         const expense = { description, note, amount, createdAt }
-        return database.ref('expenses').push(expense).then((ref) => {
+        return database.ref('expenses').push(expense).then((ref) => { // returns a promise. makes it possible to attach a .then() fuction when the start add expense is dispatched
         dispatch(addExpense({
             id: ref.key,
             ...expense
@@ -47,7 +47,7 @@ export const setExpenses = (expenses) => ({
 // START SET EXPENSES
 export const startSetExpenses = () => {
     return (dispatch) => {
-       return database.ref('expenses').once('value').then((snapshot) => {
+       return database.ref('expenses').once('value').then((snapshot) => { // returns a promise. makes it possible to attach a .then() fuction when the start set expense is dispatched
             const expenseData = []
             
             snapshot.forEach((childSnapShot) => {
@@ -57,6 +57,14 @@ export const startSetExpenses = () => {
                 })
             })
             dispatch(setExpenses(expenseData))
+        })
+    }
+}
+
+export const startRemoveExpense = ({ id }) => {
+    return (dispatch) => {
+        return database.ref(`expenses/${id}`).remove().then(() => {  // returns a promise. makes it possible to attach a .then() fuction when the start remove expense is dispatched
+            dispatch(removeExpense({ id }))
         })
     }
 }
