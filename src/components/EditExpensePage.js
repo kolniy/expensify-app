@@ -16,6 +16,7 @@ export class EditExpensePage extends React.Component {
         if(this.props.expense === undefined){
             this.props.history.push('/')
         }
+        console.log(this.props.match)
         return (
             <div>
             <ExpenseForm 
