@@ -13,6 +13,8 @@ import {
 import expenses from '../fixtures/expenses'
 import database from '../../firebase/firebase'
 
+const uid = 'thisismytestuserid'
+const defaultAuthState = { auth: { uid } }
 const createMockStore = configureMockStore([thunk]) // the thunk middleware from the redux-thunk module allows us to dispatch a function insead of as usual object
 
 beforeEach((done) => {
@@ -20,7 +22,7 @@ beforeEach((done) => {
     expenses.forEach(({ id, description, note, amount, createdAt }) => {
         expenseData[id] = { description, note, amount, createdAt }
     })
-    database.ref('expenses').set(expenseData).then(() => done())
+    database.ref(`users/${uid}/expenses`).set(expenseData).then(() => done())
 })
 
 test('should setup remove expense action object', () => {
@@ -51,7 +53,7 @@ test('should setup add expense action object with provided values', () => {
 })
 
 test('should add expense to database and store', (done) => {
-    const store = createMockStore({})
+    const store = createMockStore(defaultAuthState)
     const expenseData = { 
         description: 'mouse',
         amount: 3000,
@@ -68,7 +70,7 @@ test('should add expense to database and store', (done) => {
             ...expenseData
            }
        })
-        return database.ref(`expenses/${actions[0].expense.id}`).once('value')
+        return database.ref(`users/${uid}/expenses/${actions[0].expense.id}`).once('value')
     }).then((snapshot) => {
         expect(snapshot.val()).toEqual(expenseData)
         done()
@@ -77,7 +79,7 @@ test('should add expense to database and store', (done) => {
 
 
 test('should add expense with defaults to database and store', (done) => {
-    const store = createMockStore({})
+    const store = createMockStore(defaultAuthState)
     const expenseDefauls = { 
         description: '',
         amount: 0,
@@ -94,7 +96,7 @@ test('should add expense with defaults to database and store', (done) => {
             ...expenseDefauls,
            }
        })
-        return database.ref(`expenses/${actions[0].expense.id}`).once('value')
+        return database.ref(`users/${uid}/expenses/${actions[0].expense.id}`).once('value')
     }).then((snapshot) => {
         expect(snapshot.val()).toEqual(expenseDefauls)
         done()
@@ -110,7 +112,7 @@ test('should setup set expense action object with data', () => {
 })
 
 test('should fetch the expenses from firebase', (done) => {
-    const store = createMockStore({})
+    const store = createMockStore(defaultAuthState)
     store.dispatch(startSetExpenses()).then(() => {
         const actions = store.getActions()
         expect(actions[0]).toEqual({
@@ -122,14 +124,14 @@ test('should fetch the expenses from firebase', (done) => {
 })
 
 test('should remove the expenses from firebase', (done) => {
-    const store = createMockStore({})
+    const store = createMockStore(defaultAuthState)
     store.dispatch(startRemoveExpense({id: expenses[1].id})).then(() => {
         const actions = store.getActions()
         expect(actions[0]).toEqual({
             type: 'REMOVE_EXPENSE',
             id: expenses[1].id
         })
-        return database.ref(`expenses/${expenses[1].id}`).once('value')
+        return database.ref(`users/${uid}/expenses/${expenses[1].id}`).once('value')
     }).then((snapshot) => {
         expect(snapshot.val()).toBeNull()
         done()
@@ -137,7 +139,7 @@ test('should remove the expenses from firebase', (done) => {
 })
 
 test('should edit expense from firebase', (done) => {
-    const store = createMockStore({})
+    const store = createMockStore(defaultAuthState)
     const updates = {
         note: 'some expense data',
         description: 'some expense description',
@@ -151,7 +153,7 @@ test('should edit expense from firebase', (done) => {
             id: expenses[1].id,
             updates
         })
-        return database.ref(`expenses/${expenses[1].id}`).once('value')
+        return database.ref(`users/${uid}/expenses/${expenses[1].id}`).once('value')
     }).then((snapshot) => {
         expect(snapshot.val()).toEqual({
             ...updates
