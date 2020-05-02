@@ -1,0 +1,24 @@
+.box-layout {
+    background: url('/images/bg.jpg');
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__box {
+      background: rgba($color: #fff, $alpha: .7);
+      border-radius: 3px;
+      padding: $l-size $m-size;
+      text-align: center;
+      width: 25rem;
+      box-shadow: 0 3rem 6rem rgba($color: #fff, $alpha: .14);
+    }
+
+    &__title {
+        margin : 0 0 $m-size 0;
+        line-height: 1;
+        color: #333;
+    }
+}
