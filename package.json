@@ -35,7 +35,7 @@
     "fibers": "4.0.1",
     "firebase": "7.9.1",
     "history": "4.10.1",
-    "moment": "2.24.0",
+    "moment": "2.29.4",
     "node-sass": "4.12.0",
     "normalize.css": "8.0.1",
     "numeral": "2.0.6",
